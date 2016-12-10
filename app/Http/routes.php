@@ -11,6 +11,13 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+$app->get('ping', 'ServerController@ping');
+$app->put('config', 'ServerController@config');
+$app->put('entrylist', 'ServerController@entryList');
+$app->put('start', 'ServerController@start');
+$app->put('stop', 'ServerController@stop');
+$app->get('running', 'ServerController@running');
+$app->get('results/latest', 'ServerController@results');
+$app->get('results/all', 'ServerController@allResults');
+$app->get('log/server', 'ServerController@serverLog');
+$app->get('log/system', 'ServerController@systemLog');

@@ -1,21 +1,49 @@
-# Lumen PHP Framework
+# Assetto Corsa Sprint Racing Client
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+This is the client app that goes with the [Assetto Corsa Sprint Racing Server](https://github.com/rickselby/acsr-server).
+It handles running an Assetto Corsa server for an event.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Requirements
 
-## Official Documentation
+* PHP (duh)
+    * Curl
+* A cron job set up
+    * `* * * * * /path/to/artisan schedule:run >> /dev/null 2>&1`
+## .env
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+* `AC_SERVER_SCRIPT=` Path to a copy of [this script](https://github.com/rickselby/AssettoCorsaLinuxScripts)
+    * The web user must be able to execute this script
+        * Personally I set up a line in sudoers:
+        * `www-data ALL=(steam) NOPASSWD: /path/to/assetto-server.sh`
+* `AC_SERVER_CONFIG_PATH=` Path to AC server config file directory
+    * The web user must be able to write these files
+* `AC_SERVER_LOG_PATH=` Path to AC server log file directory
+* `AC_SERVER_RESULTS_PATH=` Path to AC server results file directory
+* `ACSR_SERVER=` URL to the ACSR server, for returning the results
 
-## Security Vulnerabilities
+## API
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+All end points expect JSON and return JSON
 
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+* `GET ping`
+    * returns `['success' => true]` 
+* `PUT config` 
+    * expects `['contents' => '']`
+    * returns `['updated' => bool]`
+* `PUT entrylist` 
+    * expects `['contents' => '']`
+    * returns `['updated' => bool]`
+* `PUT start`
+    * returns `['success' => bool]`
+* `PUT stop`
+    * returns `['success' => bool]`
+* `GET running`
+    * returns `['running' => bool]`
+* `GET results/latest`
+    * returns `['results' => string]`
+* `GET results/all`
+    * returns `['filename' => string, 'filename' => string...]` 
+* `GET log/server`
+    * returns `['log' => string]`
+* `GET log/system`
+    * returns `['filename' => string, 'filename' => string...]` 
