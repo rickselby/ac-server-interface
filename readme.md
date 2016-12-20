@@ -19,7 +19,8 @@ It handles running an Assetto Corsa server for an event.
     * The web user must be able to write these files
 * `AC_SERVER_LOG_PATH=` Path to AC server log file directory
 * `AC_SERVER_RESULTS_PATH=` Path to AC server results file directory
-* `ACSR_SERVER=` URL to the ACSR server, for returning the results
+* `ACSR_SERVER_URL=` URL to an API willing to accept `POST`ed results
+* `ACSR_IP=` IP of the machine that is allowed to make requests to this API
 
 ## API
 

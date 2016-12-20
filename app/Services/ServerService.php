@@ -220,7 +220,7 @@ class ServerService
         $files = [];
         foreach($this->getResultsSeen() AS $file) {
             if ($this->file->isFile($file)) {
-                $files[$file] = $this->file->get($file);
+                $files[basename($file)] = $this->file->get($file);
             }
         }
         return $files;
