@@ -251,16 +251,18 @@ class ServerService
      */
     protected function sendResults($file)
     {
-        Request::post(env('ACSR_SERVER').'api/results')
-            ->sendsType(Mime::JSON)
-            ->body(json_encode([
-                'results' => $this->file->get($file)
-            ]))
-            ->send();
+        if (env('ACSR_SERVER_URL')) {
+            Request::post(env('ACSR_SERVER_URL'))
+                ->sendsType(Mime::JSON)
+                ->body(json_encode([
+                    'results' => $this->file->get($file)
+                ]))
+                ->send();
 
-        $this->log->info('Assetto Corsa Server: results sent', [
-            'file' => $file,
-        ]);
+            $this->log->info('Assetto Corsa Server: results sent', [
+                'file' => $file,
+            ]);
+        }
     }
 
     /**
