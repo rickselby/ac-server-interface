@@ -37,7 +37,7 @@ class ServerService
     {
         $this->log = $log;
         $this->file = $file;
-        $this->configPath = env('AC_SERVER_CONFIG_PATH');
+        $this->configPath = $this->fixPath(env('AC_SERVER_CONFIG_PATH'));
     }
 
     /**
@@ -182,7 +182,7 @@ class ServerService
      */
     public function getLogFile()
     {
-        $path = env('AC_SERVER_LOG_PATH').$this->logFile;
+        $path =  $this->fixPath(env('AC_SERVER_LOG_PATH')).$this->logFile;
         if (!$this->file->exists($path)) {
             $path .= '.last';
             if (!$this->file->exists($path)) {
@@ -302,5 +302,17 @@ class ServerService
     {
         exec(env('AC_SERVER_SCRIPT').' '.$cmd, $out);
         return $out;
+    }
+
+    /**
+     * Check the trailing slash exists on a path
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    private function fixPath($path)
+    {
+        return (substr($path,-1) != DIRECTORY_SEPARATOR) ? $path.DIRECTORY_SEPARATOR : $path;
     }
 }
