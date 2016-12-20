@@ -29,10 +29,10 @@ All end points expect JSON and return JSON
 * `GET ping`
     * returns `['success' => true]` 
 * `PUT config` 
-    * expects `['contents' => '']`
+    * expects `['content' => '']`
     * returns `['updated' => bool]`
 * `PUT entrylist` 
-    * expects `['contents' => '']`
+    * expects `['content' => '']`
     * returns `['updated' => bool]`
 * `PUT start`
     * returns `['success' => bool]`
