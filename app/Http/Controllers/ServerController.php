@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Services\ServerService;
-use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class ServerController extends BaseController
 {
     /** @var ServerService */
-    protected $server;
+    protected $serverService;
 
     public function __construct(ServerService $serverService)
     {
-        $this->server = $serverService;
+        $this->serverService = $serverService;
     }
 
     /**
@@ -28,40 +27,14 @@ class ServerController extends BaseController
     }
 
     /**
-     * Accept a new config file for the server
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function config(Request $request)
-    {
-        $success = $this->server->updateServerConfig($request->get('content'));
-        return response()->json(['updated' => $success]);
-    }
-
-    /**
-     * Accept a new entry list file for the server
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function entryList(Request $request)
-    {
-        $success = $this->server->updateEntryList($request->get('content'));
-        return response()->json(['updated' => $success]);
-    }
-
-    /**
      * Start the server
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function start()
     {
-        $this->server->start();
-        return response()->json(['success' => $this->server->isRunning()]);
+        $this->serverService->start();
+        return response()->json(['success' => $this->serverService->isRunning()]);
     }
 
     /**
@@ -71,8 +44,8 @@ class ServerController extends BaseController
      */
     public function stop()
     {
-        $this->server->stop();
-        return response()->json(['success' => $this->server->isStopped()]);
+        $this->serverService->stop();
+        return response()->json(['success' => $this->serverService->isStopped()]);
     }
 
     /**
@@ -82,27 +55,7 @@ class ServerController extends BaseController
      */
     public function running()
     {
-        return response()->json(['running' => $this->server->isRunning()]);
-    }
-
-    /**
-     * Get the last results file from the server
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function results()
-    {
-        return response()->json(['results' => $this->server->getLatestResults()]);
-    }
-
-    /**
-     * Get all results files from the server
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function allResults()
-    {
-        return response()->json($this->server->getAllResults());
+        return response()->json(['running' => $this->serverService->isRunning()]);
     }
 
     /**
@@ -112,7 +65,7 @@ class ServerController extends BaseController
      */
     public function serverLog()
     {
-        return response()->json(['log' => $this->server->getLogFile()]);
+        return response()->json(['log' => $this->serverService->getLogFile()]);
     }
 
     /**

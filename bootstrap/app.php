@@ -49,6 +49,23 @@ $app->singleton(
 );
 
 /*
+ |--------------------------------------------------------------------------
+ | Configure Logging
+ |--------------------------------------------------------------------------
+ |
+ | Here we set up separate log files for command line processing and web access,
+ | as each are done by different users, which causes permission issues
+ |
+ */
+$app->configureMonologUsing(function (Monolog\Logger $monolog) {
+    $filename = storage_path('logs/lumen-'.php_sapi_name().'.log');
+    $monolog->pushHandler(
+        new Monolog\Handler\StreamHandler($filename)
+    );
+    return $monolog;
+});
+
+/*
 |--------------------------------------------------------------------------
 | Register Middleware
 |--------------------------------------------------------------------------

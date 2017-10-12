@@ -17,7 +17,7 @@ class Authorize
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($request->ip() != env('ACSR_IP')) {
+        if ($request->ip() != env('MASTER_IP')) {
             return response('Unauthorized.', 401);
         }
 
