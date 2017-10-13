@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\ServerService;
+use App\Services\ResultsService;
 use Illuminate\Console\Command;
 
 class CheckForResultsCommand extends Command
@@ -24,8 +24,8 @@ class CheckForResultsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(ServerService $serverService)
+    public function handle(ResultsService $resultsService)
     {
-        $serverService->checkForResults();
+        $resultsService->checkForResults();
     }
 }
