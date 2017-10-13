@@ -98,7 +98,7 @@ class ApiTest extends TestCase
             '1-temp' => 'foo bar',
             '2-temp' => 'boo far',
         ];
-        foreach($fileContents AS $file => $content) {
+        foreach ($fileContents as $file => $content) {
             \Storage::disk('ac_server')->put(ResultsService::resultsDir.DIRECTORY_SEPARATOR.$file, $content);
         }
         $this->json('GET', '/results/all')
@@ -135,7 +135,7 @@ class ApiTest extends TestCase
 
     public function logFileProvider()
     {
-        return array_map(function($element) {
+        return array_map(function ($element) {
             return [$element];
         }, ServerService::logFiles);
     }

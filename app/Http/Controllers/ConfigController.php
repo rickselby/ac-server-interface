@@ -17,7 +17,7 @@ class ConfigController extends BaseController
     }
 
     /**
-     * Accept a new config file for the server
+     * Accept a new config file for the server.
      *
      * @param Request $request
      *
@@ -26,11 +26,12 @@ class ConfigController extends BaseController
     public function config(Request $request)
     {
         $success = $this->configService->updateServerConfig($request->get('content'));
+
         return response()->json(['updated' => $success]);
     }
 
     /**
-     * Accept a new entry list file for the server
+     * Accept a new entry list file for the server.
      *
      * @param Request $request
      *
@@ -39,7 +40,7 @@ class ConfigController extends BaseController
     public function entryList(Request $request)
     {
         $success = $this->configService->updateEntryList($request->get('content'));
+
         return response()->json(['updated' => $success]);
     }
-
 }

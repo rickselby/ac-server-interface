@@ -66,6 +66,7 @@ $app->configureMonologUsing(function (Monolog\Logger $monolog) {
     $monolog->pushHandler(
         new Monolog\Handler\StreamHandler($filename)
     );
+
     return $monolog;
 });
 
@@ -81,7 +82,7 @@ $app->configureMonologUsing(function (Monolog\Logger $monolog) {
 */
 
 $app->middleware([
-    App\Http\Middleware\Authorize::class
+    App\Http\Middleware\Authorize::class,
 ]);
 
 /*

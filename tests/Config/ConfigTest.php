@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
         \Storage::fake('ac_server');
         \Storage::fake('local');
     }
-    
+
     public function testSetEntryList()
     {
         $content = 'foo';
@@ -45,5 +45,4 @@ class ConfigTest extends TestCase
         \Storage::disk('ac_server')->assertExists($file);
         $this->assertEquals($content, \Storage::disk('ac_server')->get($file));
     }
-
 }
