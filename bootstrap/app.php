@@ -23,7 +23,11 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->configure('filesystems');
+
+$app->withFacades(true, [
+    \Illuminate\Support\Facades\Storage::class => 'Storage',
+]);
 
 // $app->withEloquent();
 
@@ -47,6 +51,23 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
+
+/*
+ |--------------------------------------------------------------------------
+ | Configure Logging
+ |--------------------------------------------------------------------------
+ |
+ | Here we set up separate log files for command line processing and web access,
+ | as each are done by different users, which causes permission issues
+ |
+ */
+$app->configureMonologUsing(function (Monolog\Logger $monolog) {
+    $filename = storage_path('logs/lumen-'.php_sapi_name().'.log');
+    $monolog->pushHandler(
+        new Monolog\Handler\StreamHandler($filename)
+    );
+    return $monolog;
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +98,12 @@ $app->middleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(\Illuminate\Filesystem\FilesystemServiceProvider::class);
+
+if ($app->environment() !== 'production') {
+    $app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -11,13 +11,23 @@
 |
 */
 
-$router->put('config', 'ServerController@config');
-$router->put('entrylist', 'ServerController@entryList');
-$router->get('log/server', 'ServerController@serverLog');
-$router->get('log/system', 'ServerController@systemLog');
+/** @var \Laravel\Lumen\Routing\Router */
+$router->group(['prefix' => 'config'], function() use ($router) {
+    $router->put('entry-list', 'ConfigController@entryList');
+    $router->put('server', 'ConfigController@config');
+});
+
+$router->group(['prefix' => 'log'], function() use ($router) {
+    $router->get('server', 'ServerController@serverLog');
+    $router->get('system', 'ServerController@systemLog');
+});
+
+$router->group(['prefix' => 'results'], function() use ($router) {
+    $router->get('all', 'ResultsController@allResults');
+    $router->get('latest', 'ResultsController@results');
+});
+
 $router->get('ping', 'ServerController@ping');
-$router->get('results/all', 'ServerController@allResults');
-$router->get('results/latest', 'ServerController@results');
 $router->get('running', 'ServerController@running');
 $router->put('start', 'ServerController@start');
 $router->put('stop', 'ServerController@stop');

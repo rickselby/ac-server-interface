@@ -1,12 +1,12 @@
-# Assetto Corsa Sprint Racing Client
+# Assetto Corsa Server Client
 
-This is the client app that goes with the [Assetto Corsa Sprint Racing Server](https://github.com/rickselby/acsr-server).
-It handles running an Assetto Corsa server for an event.
+This is the client app that goes with... a master app to control a number of clients. To be created.
+
+It's a web interface to control an assetto corsa server.
 
 ## Requirements
 
-* PHP (duh)
-    * Curl
+* PHP, apache/nginx/whatever takes your fancy
 * A cron job set up
     * `* * * * * /path/to/artisan schedule:run >> /dev/null 2>&1`
 ## .env
@@ -15,12 +15,10 @@ It handles running an Assetto Corsa server for an event.
     * The web user must be able to execute this script
         * Personally I set up a line in sudoers:
         * `www-data ALL=(steam) NOPASSWD: /path/to/assetto-server.sh`
-* `AC_SERVER_CONFIG_PATH=` Path to AC server config file directory
-    * The web user must be able to write these files
-* `AC_SERVER_LOG_PATH=` Path to AC server log file directory
-* `AC_SERVER_RESULTS_PATH=` Path to AC server results file directory
-* `ACSR_SERVER_URL=` URL to an API willing to accept `POST`ed results
-* `ACSR_IP=` IP of the machine that is allowed to make requests to this API
+* `AC_SERVER_ROOT=` Path to AC server root
+    * The web user must be able to write to the config files
+* `MASTER_SERVER_URL=` URL to an API willing to accept `POST`ed results
+* `MASTER_IP=` IP of the machine that is allowed to make requests to this API
 
 ## API
 
@@ -28,10 +26,10 @@ All end points expect JSON and return JSON
 
 * `GET ping`
     * returns `['success' => true]`
-* `PUT config`
+* `PUT config/server`
     * expects `['content' => '']`
     * returns `['updated' => bool]`
-* `PUT entrylist`
+* `PUT config/entry-list`
     * expects `['content' => '']`
     * returns `['updated' => bool]`
 * `PUT start`
