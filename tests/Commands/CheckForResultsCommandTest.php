@@ -14,7 +14,7 @@ class CheckForResultsCommandTest extends TestCase
     {
         parent::setUp();
         $this->resultsService = $this->createMock(ResultsService::class);
-        $this->app->bind(ResultsService::class, function() {
+        $this->app->bind(ResultsService::class, function () {
             return $this->resultsService;
         });
     }
@@ -24,5 +24,4 @@ class CheckForResultsCommandTest extends TestCase
         $this->resultsService->expects($this->once())->method('checkForResults');
         $this->artisan('server:results-check');
     }
-
 }
