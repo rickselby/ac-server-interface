@@ -13,7 +13,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router */
 $router->group(['prefix' => 'config'], function() use ($router) {
-    $router->put('entrylist', 'ConfigController@entryList');
+    $router->put('entry-list', 'ConfigController@entryList');
     $router->put('server', 'ConfigController@config');
 });
 
