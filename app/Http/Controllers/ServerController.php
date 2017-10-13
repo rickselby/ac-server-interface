@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\ServerService;
 use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
-class ServerController extends Controller
+class ServerController extends BaseController
 {
     /** @var ServerService */
     protected $server;

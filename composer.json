@@ -6,13 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "laravel/lumen-framework": "5.3.*",
+        "laravel/lumen-framework": "5.5.*",
         "vlucas/phpdotenv": "~2.2",
-        "nategood/httpful": "^0.2.20"
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~6.0",
         "mockery/mockery": "~0.9"
     },
     "autoload": {
@@ -21,10 +21,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/",
-            "database/"
-        ]
+        "psr-4": {
+            "RickSelby\\Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
@@ -32,5 +31,6 @@
         ]
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "optimize-autoloader": true
 }

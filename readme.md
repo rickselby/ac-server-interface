@@ -27,11 +27,11 @@ It handles running an Assetto Corsa server for an event.
 All end points expect JSON and return JSON
 
 * `GET ping`
-    * returns `['success' => true]` 
-* `PUT config` 
+    * returns `['success' => true]`
+* `PUT config`
     * expects `['content' => '']`
     * returns `['updated' => bool]`
-* `PUT entrylist` 
+* `PUT entrylist`
     * expects `['content' => '']`
     * returns `['updated' => bool]`
 * `PUT start`
@@ -43,8 +43,8 @@ All end points expect JSON and return JSON
 * `GET results/latest`
     * returns `['results' => string]`
 * `GET results/all`
-    * returns `['filename' => string, 'filename' => string...]` 
+    * returns `['filename' => string, 'filename' => string...]`
 * `GET log/server`
     * returns `['log' => string]`
 * `GET log/system`
-    * returns `['filename' => string, 'filename' => string...]` 
+    * returns `['filename' => string, 'filename' => string...]`

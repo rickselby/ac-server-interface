@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use Httpful\Mime;
-use Httpful\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class ServerService
 {
@@ -13,7 +13,7 @@ class ServerService
     protected $entryList = 'entry_list.ini';
     protected $serverConfig = 'server_cfg.ini';
     protected $logFile = 'acServer.log';
-    protected $resultsSeenFile = 'results.list';
+    protected $resultsSeenFile = 'app'.DIRECTORY_SEPARATOR.'results.list';
 
     /** @var LoggerInterface */
     protected $log;
@@ -252,12 +252,13 @@ class ServerService
     protected function sendResults($file)
     {
         if (env('ACSR_SERVER_URL')) {
-            Request::post(env('ACSR_SERVER_URL'))
-                ->sendsType(Mime::JSON)
-                ->body(json_encode([
-                    'results' => $this->file->get($file)
-                ]))
-                ->send();
+
+            $client = new Client();
+            $client->post(env('ACSR_SERVER_URL'), [
+                RequestOptions::JSON => [
+                    'results' => $this->file->get($file),
+                ],
+            ]);
 
             $this->log->info('Assetto Corsa Server: results sent', [
                 'file' => $file,
