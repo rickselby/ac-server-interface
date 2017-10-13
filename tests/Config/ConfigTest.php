@@ -29,7 +29,7 @@ class ConfigTest extends TestCase
         $content = 'foo';
         $returned = $this->config->updateEntryList($content);
         $this->assertTrue($returned);
-        $this->checkConfigFile(ConfigService::entryList, $content);
+        $this->checkConfigFile(ConfigService::ENTRY_LIST, $content);
     }
 
     public function testSetServerConfig()
@@ -37,7 +37,7 @@ class ConfigTest extends TestCase
         $content = 'bar';
         $returned = $this->config->updateServerConfig($content);
         $this->assertTrue($returned);
-        $this->checkConfigFile(ConfigService::serverConfig, $content);
+        $this->checkConfigFile(ConfigService::SERVER_CONFIG, $content);
     }
 
     private function checkConfigFile($file, $content)

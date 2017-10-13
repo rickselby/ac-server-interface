@@ -29,8 +29,6 @@ $app->withFacades(true, [
     \Illuminate\Support\Facades\Storage::class => 'Storage',
 ]);
 
-// $app->withEloquent();
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -95,10 +93,6 @@ $app->middleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(\Illuminate\Filesystem\FilesystemServiceProvider::class);
 

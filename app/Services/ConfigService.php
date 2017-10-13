@@ -10,8 +10,8 @@ class ConfigService
     private $log;
 
     // Paths are relative to the AC server base
-    const entryList = 'cfg'.DIRECTORY_SEPARATOR.'entry_list.ini';
-    const serverConfig = 'cfg'.DIRECTORY_SEPARATOR.'server_cfg.ini';
+    const ENTRY_LIST = 'cfg'.DIRECTORY_SEPARATOR.'entry_list.ini';
+    const SERVER_CONFIG = 'cfg'.DIRECTORY_SEPARATOR.'server_cfg.ini';
 
     public function __construct(LoggerInterface $log)
     {
@@ -27,7 +27,7 @@ class ConfigService
      */
     public function updateEntryList($contents)
     {
-        return $this->updateConfigFile(self::entryList, $contents, $this->getCurrentEntryList(), 'entry');
+        return $this->updateConfigFile(self::ENTRY_LIST, $contents, $this->getCurrentEntryList(), 'entry');
     }
 
     /**
@@ -39,7 +39,7 @@ class ConfigService
      */
     public function updateServerConfig($contents)
     {
-        return $this->updateConfigFile(self::serverConfig, $contents, $this->getCurrentConfigFile(), 'config');
+        return $this->updateConfigFile(self::SERVER_CONFIG, $contents, $this->getCurrentConfigFile(), 'config');
     }
 
     /**
@@ -84,7 +84,7 @@ class ConfigService
      */
     public function getCurrentEntryList()
     {
-        return $this->getConfigFile(self::entryList);
+        return $this->getConfigFile(self::ENTRY_LIST);
     }
 
     /**
@@ -94,7 +94,7 @@ class ConfigService
      */
     public function getCurrentConfigFile()
     {
-        return $this->getConfigFile(self::serverConfig);
+        return $this->getConfigFile(self::SERVER_CONFIG);
     }
 
     /**

@@ -80,8 +80,8 @@ class ApiTest extends TestCase
             ->seeJsonEquals(['results' => false]);
         // Now, if there are files?
         $content = 'foo bar';
-        \Storage::disk('ac_server')->put(ResultsService::resultsDir.DIRECTORY_SEPARATOR.'1-temp', 'something');
-        \Storage::disk('ac_server')->put(ResultsService::resultsDir.DIRECTORY_SEPARATOR.'2-temp', $content);
+        \Storage::disk('ac_server')->put(ResultsService::RESULTS_DIRECTORY.DIRECTORY_SEPARATOR.'1-temp', 'something');
+        \Storage::disk('ac_server')->put(ResultsService::RESULTS_DIRECTORY.DIRECTORY_SEPARATOR.'2-temp', $content);
         $this->json('GET', '/results/latest')
             ->seeStatusCode(200)
             ->seeJsonEquals(['results' => $content]);
@@ -98,7 +98,7 @@ class ApiTest extends TestCase
             '2-temp' => 'boo far',
         ];
         foreach ($fileContents as $file => $content) {
-            \Storage::disk('ac_server')->put(ResultsService::resultsDir.DIRECTORY_SEPARATOR.$file, $content);
+            \Storage::disk('ac_server')->put(ResultsService::RESULTS_DIRECTORY.DIRECTORY_SEPARATOR.$file, $content);
         }
         $this->json('GET', '/results/all')
             ->seeStatusCode(200)
@@ -136,7 +136,7 @@ class ApiTest extends TestCase
     {
         return array_map(function ($element) {
             return [$element];
-        }, ServerService::logFiles);
+        }, ServerService::LOG_FILES);
     }
 
     protected function setIP()

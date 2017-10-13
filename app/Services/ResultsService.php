@@ -13,8 +13,8 @@ class ResultsService
     /** @var LoggerInterface */
     private $log;
 
-    const resultsSentFile = 'results.sent';
-    const resultsDir = 'results';
+    const RESULTS_SENT_FILE = 'results.sent';
+    const RESULTS_DIRECTORY = 'results';
 
     public function __construct(LoggerInterface $log, Client $client)
     {
@@ -77,7 +77,7 @@ class ResultsService
      */
     protected function getListOfExistingFiles()
     {
-        $files = \Storage::disk('ac_server')->files(self::resultsDir);
+        $files = \Storage::disk('ac_server')->files(self::RESULTS_DIRECTORY);
         sort($files);
 
         return $files;
@@ -111,9 +111,9 @@ class ResultsService
      */
     protected function getListOfResultsSent()
     {
-        if (\Storage::disk('local')->exists(self::resultsSentFile)) {
+        if (\Storage::disk('local')->exists(self::RESULTS_SENT_FILE)) {
             return array_filter(
-                explode("\n", \Storage::disk('local')->get(self::resultsSentFile))
+                explode("\n", \Storage::disk('local')->get(self::RESULTS_SENT_FILE))
             );
         } else {
             return [];
@@ -127,6 +127,6 @@ class ResultsService
      */
     protected function setResultsSent($filename)
     {
-        \Storage::disk('local')->append(self::resultsSentFile, $filename);
+        \Storage::disk('local')->append(self::RESULTS_SENT_FILE, $filename);
     }
 }

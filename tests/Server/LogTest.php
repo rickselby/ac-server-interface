@@ -33,6 +33,6 @@ class LogTest extends ServerSetup
     {
         return array_map(function ($element) {
             return [$element];
-        }, ServerService::logFiles);
+        }, ServerService::LOG_FILES);
     }
 }

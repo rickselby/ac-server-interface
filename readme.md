@@ -1,5 +1,10 @@
 # Assetto Corsa Server Client
 
+![PHP 7.0+](https://img.shields.io/badge/php-7.0%2B-blue.svg)
+[![Build Status](https://travis-ci.org/rickselby/ac-server-interface.svg?branch=travis)](https://travis-ci.org/rickselby/ac-server-interface)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rickselby/ac-server-interface/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rickselby/ac-server-interface/?branch=master)
+[![Style CI](https://styleci.io/repos/75005750/shield?style=plastic)](https://styleci.io/repos/75005750/)
+
 This is the client app that goes with... a master app to control a number of clients. To be created.
 
 It's a web interface to control an assetto corsa server.
