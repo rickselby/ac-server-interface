@@ -3,7 +3,8 @@
 ![PHP 7.0+](https://img.shields.io/badge/php-7.0%2B-blue.svg)
 [![Build Status](https://travis-ci.org/rickselby/ac-server-interface.svg?branch=travis)](https://travis-ci.org/rickselby/ac-server-interface)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rickselby/ac-server-interface/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rickselby/ac-server-interface/?branch=master)
-[![Style CI](https://styleci.io/repos/75005750/shield?style=plastic)](https://styleci.io/repos/75005750/)
+[![Style CI](https://styleci.io/repos/75005750/shield?style=flat)](https://styleci.io/repos/75005750/)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/408e8e4d-d7c1-4289-b54a-622e5373264f.svg)](https://insight.sensiolabs.com/projects/408e8e4d-d7c1-4289-b54a-622e5373264f)
 
 This is the client app that goes with... a master app to control a number of clients. To be created.
 
