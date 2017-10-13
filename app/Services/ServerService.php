@@ -88,7 +88,7 @@ class ServerService
      */
     public function getLogFile()
     {
-        foreach (self::LOG_FILES AS $logFile) {
+        foreach (self::LOG_FILES as $logFile) {
             if (\Storage::disk('ac_server')->exists($logFile)) {
                 return \Storage::disk('ac_server')->get($logFile);
             }
