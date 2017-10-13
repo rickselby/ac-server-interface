@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Psr\Log\LoggerInterface;
-use Illuminate\Filesystem\Filesystem;
 
 abstract class ServerBase
 {
@@ -11,7 +10,7 @@ abstract class ServerBase
     protected $log;
 
     /**
-     * ServerService constructor. Initialise the requirements
+     * ServerService constructor. Initialise the requirements.
      *
      * @param LoggerInterface $log
      */
@@ -21,7 +20,7 @@ abstract class ServerBase
     }
 
     /**
-     * Check the trailing slash exists on a path
+     * Check the trailing slash exists on a path.
      *
      * @param $path
      *
@@ -29,6 +28,6 @@ abstract class ServerBase
      */
     protected function fixPath($path)
     {
-        return (substr($path,-1) != DIRECTORY_SEPARATOR) ? $path.DIRECTORY_SEPARATOR : $path;
+        return (substr($path, -1) != DIRECTORY_SEPARATOR) ? $path.DIRECTORY_SEPARATOR : $path;
     }
 }

@@ -10,7 +10,7 @@ class ScriptTest extends TestCase
     /** @var ScriptService */
     protected $scriptService;
 
-    const command='/path/to/cmd';
+    const command = '/path/to/cmd';
 
     public function setUp()
     {
@@ -20,7 +20,7 @@ class ScriptTest extends TestCase
     }
 
     /**
-     * Test that run() runs the AC_SERVER_SCRIPT command correctly
+     * Test that run() runs the AC_SERVER_SCRIPT command correctly.
      */
     public function testExec()
     {
@@ -31,4 +31,3 @@ class ScriptTest extends TestCase
         );
     }
 }
-

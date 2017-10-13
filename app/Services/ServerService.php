@@ -30,7 +30,7 @@ class ServerService
     }
 
     /**
-     * Start the server
+     * Start the server.
      */
     public function start()
     {
@@ -40,7 +40,7 @@ class ServerService
     }
 
     /**
-     * Stop the server
+     * Stop the server.
      */
     public function stop()
     {
@@ -50,17 +50,20 @@ class ServerService
     }
 
     /**
-     * Get the status of the server
+     * Get the status of the server.
+     *
      * @return string
      */
     public function status()
     {
         $out = $this->scriptService->run('status');
+
         return $out[0];
     }
 
     /**
-     * Check if the server is running
+     * Check if the server is running.
+     *
      * @return bool
      */
     public function isRunning()
@@ -69,7 +72,8 @@ class ServerService
     }
 
     /**
-     * Check if the server is stopped
+     * Check if the server is stopped.
+     *
      * @return bool
      */
     public function isStopped()
@@ -78,17 +82,18 @@ class ServerService
     }
 
     /**
-     * Get the server log file
+     * Get the server log file.
      *
      * @return string
      */
     public function getLogFile()
     {
-        foreach(self::logFiles AS $logFile) {
+        foreach (self::logFiles as $logFile) {
             if (\Storage::disk('ac_server')->exists($logFile)) {
                 return \Storage::disk('ac_server')->get($logFile);
             }
         }
+
         return '';
     }
 }

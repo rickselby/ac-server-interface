@@ -16,7 +16,7 @@ class ResultsController extends BaseController
     }
 
     /**
-     * Get the last results file from the server
+     * Get the last results file from the server.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -26,7 +26,7 @@ class ResultsController extends BaseController
     }
 
     /**
-     * Get all results files from the server
+     * Get all results files from the server.
      *
      * @return \Illuminate\Http\JsonResponse
      */

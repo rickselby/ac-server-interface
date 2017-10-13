@@ -23,7 +23,7 @@ class ResultsService
     }
 
     /**
-     * Get the latest results file
+     * Get the latest results file.
      *
      * @return bool|string
      */
@@ -39,28 +39,29 @@ class ResultsService
     }
 
     /**
-     * Get all results files from the server
+     * Get all results files from the server.
      *
      * @return array
      */
     public function getAllResults()
     {
         $files = [];
-        foreach($this->getListOfExistingFiles() AS $file) {
+        foreach ($this->getListOfExistingFiles() as $file) {
             if (\Storage::disk('ac_server')->exists($file)) {
                 $files[basename($file)] = \Storage::disk('ac_server')->get($file);
             }
         }
+
         return $files;
     }
 
     /**
-     * Check for new results files; send any to the ACSR server
+     * Check for new results files; send any to the ACSR server.
      */
     public function checkForResults()
     {
         $resultsSent = $this->getListOfResultsSent();
-        foreach($this->getListOfExistingFiles() AS $file) {
+        foreach ($this->getListOfExistingFiles() as $file) {
             if (!in_array($file, $resultsSent)) {
                 // send to ACSR server
                 $this->sendResults($file);
@@ -70,7 +71,7 @@ class ResultsService
     }
 
     /**
-     * Get a (sorted) list of all results files
+     * Get a (sorted) list of all results files.
      *
      * @return array
      */
@@ -78,11 +79,12 @@ class ResultsService
     {
         $files = \Storage::disk('ac_server')->files(self::resultsDir);
         sort($files);
+
         return $files;
     }
 
     /**
-     * Send a results file to the ACSR server
+     * Send a results file to the ACSR server.
      *
      * @param $file
      */
@@ -103,7 +105,7 @@ class ResultsService
     }
 
     /**
-     * Get a list of the results files we have already sent
+     * Get a list of the results files we have already sent.
      *
      * @return string[]
      */
@@ -119,7 +121,7 @@ class ResultsService
     }
 
     /**
-     * Add a new file to the list of sent results files
+     * Add a new file to the list of sent results files.
      *
      * @param $filename
      */
