@@ -2,24 +2,20 @@
 
 namespace App\Services;
 
-use Illuminate\Filesystem\Filesystem;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\visitor\vfsStreamPrintVisitor;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 use Psr\Log\LoggerInterface;
 
-class ConfigService extends ServerBase
+class ConfigService
 {
-    /** @var string */
-    protected $configPath;
+    /** @var LoggerInterface */
+    private $log;
 
-    const entryList = 'entry_list.ini';
-    const serverConfig = 'server_cfg.ini';
+    // Paths are relative to the AC server base
+    const entryList = 'cfg'.DIRECTORY_SEPARATOR.'entry_list.ini';
+    const serverConfig = 'cfg'.DIRECTORY_SEPARATOR.'server_cfg.ini';
 
-    public function __construct(LoggerInterface $log, Filesystem $file)
+    public function __construct(LoggerInterface $log)
     {
-        parent::__construct($log, $file);
-        $this->configPath = $this->fixPath(env('AC_SERVER_CONFIG_PATH'));
+        $this->log = $log;
     }
 
     /**
@@ -31,12 +27,7 @@ class ConfigService extends ServerBase
      */
     public function updateEntryList($contents)
     {
-        return $this->updateConfigFile(
-            $contents,
-            self::entryList,
-            $this->getCurrentEntryList(),
-            'entry'
-        );
+        return $this->updateConfigFile(self::entryList, $contents, $this->getCurrentEntryList(), 'entry');
     }
 
     /**
@@ -48,51 +39,45 @@ class ConfigService extends ServerBase
      */
     public function updateServerConfig($contents)
     {
-        return $this->updateConfigFile(
-            $contents,
-            self::serverConfig,
-            $this->getCurrentConfigFile(),
-            'config'
-        );
+        return $this->updateConfigFile(self::serverConfig, $contents, $this->getCurrentConfigFile(), 'config');
     }
 
     /**
      * Update a config file
-     * @param string $contents
-     * @param string $name
-     * @param string $currentFile
-     * @param string $path
+     *
+     * @param string $destination       Path to server file to update
+     * @param string $contents          New contents of file
+     * @param string $currentContents   Previous contents of file
+     * @param string $localPath         Path to store a local copy
+     *
      * @return bool
      */
-    protected function updateConfigFile($contents, $name, $currentFile, $path)
+    protected function updateConfigFile($destination, $contents, $currentContents, $localPath)
     {
-        if ($contents != $currentFile) {
-            // Get the path to local storage, where we will keep a copy of this file
-            $localPath = storage_path('app'.DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR);
-            if (!is_dir($localPath)) {
-                $this->file->makeDirectory($localPath, 0755, true);
-            }
-            $localName = time().'-'.$name;
+        if ($contents != $currentContents) {
+            $localName = time().'.ini';
 
+            // Keep a local copy of the file
+            \Storage::disk('local')->put($localPath.DIRECTORY_SEPARATOR.$localName, $contents);
 
-            // Set the contents of the file
-            $this->file->put($localPath.$localName, $contents);
-            // Then copy the file to the server config
-            $this->file->copy($localPath.$localName, $this->configPath.$name);
+            // Overwrite the actual config file
+            \Storage::disk('ac_server')->put($destination, $contents);
 
             // Log the action
-            $this->log->info('Assetto Corsa Server: file uploaded', [
+            $this->log->info('Config: '.$destination.' updated', [
                 'file' => $localName,
             ]);
 
             return true;
         } else {
+            // Log the action
+            $this->log->info('Config: '.$destination.' not updated; identical to existing file');
             return false;
         }
     }
 
     /**
-     * Get the current entry list
+     * Get the current entry list contents
      *
      * @return string
      */
@@ -102,7 +87,7 @@ class ConfigService extends ServerBase
     }
 
     /**
-     * Get the current config file
+     * Get the current config file contents
      *
      * @return string
      */
@@ -120,8 +105,8 @@ class ConfigService extends ServerBase
      */
     protected function getConfigFile($name)
     {
-        if ($this->file->isFile($this->configPath.$name)) {
-            return $this->file->get($this->configPath.$name);
+        if (\Storage::disk('ac_server')->exists($name)) {
+            return \Storage::disk('ac_server')->get($name);
         } else {
             return '';
         }

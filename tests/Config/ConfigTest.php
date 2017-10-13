@@ -5,9 +5,9 @@ namespace RickSelby\Tests\Config;
 use App\Services\ConfigService;
 use Illuminate\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface;
-use RickSelby\Tests\BaseSetup;
+use RickSelby\Tests\TestCase;
 
-class ConfigTest extends BaseSetup
+class ConfigTest extends TestCase
 {
     /** @var ConfigService */
     protected $config;
@@ -15,11 +15,13 @@ class ConfigTest extends BaseSetup
     public function setUp()
     {
         parent::setUp();
-        putenv('AC_SERVER_CONFIG_PATH='.$this->vfsRoot->url());
         $this->config = new ConfigService(
             $this->createMock(LoggerInterface::class),
             $this->app->make(Filesystem::class)
         );
+
+        \Storage::fake('ac_server');
+        \Storage::fake('local');
     }
     
     public function testSetEntryList()
@@ -27,7 +29,7 @@ class ConfigTest extends BaseSetup
         $content = 'foo';
         $returned = $this->config->updateEntryList($content);
         $this->assertTrue($returned);
-        $this->checkConfigFile('entry_list.ini', $content);
+        $this->checkConfigFile(ConfigService::entryList, $content);
     }
 
     public function testSetServerConfig()
@@ -35,13 +37,13 @@ class ConfigTest extends BaseSetup
         $content = 'bar';
         $returned = $this->config->updateServerConfig($content);
         $this->assertTrue($returned);
-        $this->checkConfigFile('server_cfg.ini', $content);
+        $this->checkConfigFile(ConfigService::serverConfig, $content);
     }
 
     private function checkConfigFile($file, $content)
     {
-        $this->assertTrue($this->vfsRoot->hasChild($file));
-        $this->assertEquals($content, file_get_contents($this->vfsRoot->getChild($file)->url()));
+        \Storage::disk('ac_server')->assertExists($file);
+        $this->assertEquals($content, \Storage::disk('ac_server')->get($file));
     }
 
 }

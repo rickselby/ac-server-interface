@@ -12,9 +12,9 @@ namespace App\Services {
 namespace RickSelby\Tests\Script {
 
     use App\Services\ScriptService;
-    use RickSelby\Tests\BaseSetup;
+    use RickSelby\Tests\TestCase;
 
-    class ScriptTest extends BaseSetup
+    class ScriptTest extends TestCase
     {
         /** @var ScriptService */
         protected $scriptService;

@@ -10,19 +10,14 @@ abstract class ServerBase
     /** @var LoggerInterface */
     protected $log;
 
-    /** @var Filesystem */
-    protected $file;
-
     /**
      * ServerService constructor. Initialise the requirements
      *
      * @param LoggerInterface $log
-     * @param Filesystem $file
      */
-    public function __construct(LoggerInterface $log, Filesystem $file)
+    public function __construct(LoggerInterface $log)
     {
         $this->log = $log;
-        $this->file = $file;
     }
 
     /**

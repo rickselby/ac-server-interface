@@ -9,25 +9,19 @@ class LatestResultsTest extends ResultsSetup
         $this->assertFalse($this->results->getLatestResults());
     }
 
-    public function testWhenNoReadResults()
-    {
-        $this->addResultFile();
-        $this->assertFalse($this->results->getLatestResults());
-    }
-
-    public function testWhenReadResults()
+    public function testWhenOneResults()
     {
         $content = 'wibble';
-        $this->addResultFileAsRead($content);
+        $this->addResultFile($content);
         $this->assertEquals($content, $this->results->getLatestResults());
     }
 
-    public function testWhenMultipleReadResults()
+    public function testWhenMultipleResults()
     {
         $content = 'wibble';
-        $this->addResultFileAsRead('foo');
-        $this->addResultFileAsRead('bar');
-        $this->addResultFileAsRead($content);
+        $this->addResultFile('foo');
+        $this->addResultFile('bar');
+        $this->addResultFile($content);
         $this->assertEquals($content, $this->results->getLatestResults());
     }
 }

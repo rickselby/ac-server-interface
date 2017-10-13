@@ -2,6 +2,8 @@
 
 namespace RickSelby\Tests\Results;
 
+use App\Services\ResultsService;
+
 class CheckForResultsTest extends ResultsSetup
 {
     public function testWhenNoResults()
@@ -14,7 +16,7 @@ class CheckForResultsTest extends ResultsSetup
     public function testWhenResultsRead()
     {
         $this->withMasterUrl();
-        $this->addResultFileAsRead('sth');
+        $this->addResultFileAsSent('sth');
         $this->guzzleClient->expects($this->never())->method('request');
         $this->results->checkForResults();
     }
@@ -47,6 +49,15 @@ class CheckForResultsTest extends ResultsSetup
         $this->results->checkForResults();
     }
 
+    /*************************************************************************/
+
+    protected function addResultFileAsSent($content = '')
+    {
+        $path = $this->addResultFile($content);
+        \Storage::disk('local')->append(ResultsService::resultsSentFile, $path);
+        return $path;
+    }
+
     protected function withMasterUrl()
     {
         putenv('MASTER_SERVER_URL=sth');
@@ -56,4 +67,5 @@ class CheckForResultsTest extends ResultsSetup
     {
         putenv('MASTER_SERVER_URL');
     }
+
 }

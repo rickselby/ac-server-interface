@@ -2,21 +2,23 @@
 
 namespace RickSelby\Tests\Server;
 
-use org\bovigo\vfs\vfsStream;
+use App\Services\ServerService;
 
 class LogTest extends ServerSetup
 {
-    public function testGetServerLogRecent()
+    public function setUp()
     {
-        $content = 'wibble';
-        $this->vfsRoot->addChild(vfsStream::newFile('acServer.log')->setContent($content));
-        $this->assertEquals($content, $this->server->getLogFile());
+        parent::setUp();
+        \Storage::fake('ac_server');
     }
 
-    public function testGetServerLogLast()
+    /**
+     * @dataProvider logFileProvider
+     */
+    public function testGetServerLogs($logFile)
     {
-        $content = 'wubble';
-        $this->vfsRoot->addChild(vfsStream::newFile('acServer.log.last')->setContent($content));
+        $content = 'wibble';
+        \Storage::disk('ac_server')->put($logFile, $content);
         $this->assertEquals($content, $this->server->getLogFile());
     }
 
@@ -24,4 +26,14 @@ class LogTest extends ServerSetup
     {
         $this->assertEquals('', $this->server->getLogFile());
     }
+
+    /*************************************************************************/
+
+    public function logFileProvider()
+    {
+        return array_map(function($element) {
+            return [$element];
+        }, ServerService::logFiles);
+    }
+
 }

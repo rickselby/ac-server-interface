@@ -2,25 +2,30 @@
 
 namespace App\Services;
 
-use Illuminate\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface;
 
-class ServerService extends ServerBase
+class ServerService
 {
+    /** @var LoggerInterface */
+    private $log;
     /** @var ScriptService */
     private $scriptService;
 
-    const logFile = 'acServer.log';
+    // Possible log files, in the order we wish to check them
+    const logFiles = [
+        'acServer.log',
+        'acServer.log.last',
+    ];
 
     /*
      * Messages we expect from the script
      */
-    protected $running = 'Server is Running';
-    protected $notRunning = 'Server is Not Running';
+    const msg_running = 'Server is Running';
+    const msg_notRunning = 'Server is Not Running';
 
-    public function __construct(LoggerInterface $log, Filesystem $file, ScriptService $scriptService)
+    public function __construct(LoggerInterface $log, ScriptService $scriptService)
     {
-        parent::__construct($log, $file);
+        $this->log = $log;
         $this->scriptService = $scriptService;
     }
 
@@ -60,7 +65,7 @@ class ServerService extends ServerBase
      */
     public function isRunning()
     {
-        return $this->status() == $this->running;
+        return $this->status() == self::msg_running;
     }
 
     /**
@@ -69,7 +74,7 @@ class ServerService extends ServerBase
      */
     public function isStopped()
     {
-        return $this->status() == $this->notRunning;
+        return $this->status() == self::msg_notRunning;
     }
 
     /**
@@ -79,14 +84,11 @@ class ServerService extends ServerBase
      */
     public function getLogFile()
     {
-        $path = $this->fixPath(env('AC_SERVER_LOG_PATH')).self::logFile;
-        if (!$this->file->exists($path)) {
-            $path .= '.last';
-            if (!$this->file->exists($path)) {
-                return '';
+        foreach(self::logFiles AS $logFile) {
+            if (\Storage::disk('ac_server')->exists($logFile)) {
+                return \Storage::disk('ac_server')->get($logFile);
             }
         }
-
-        return $this->file->get($path);
+        return '';
     }
 }

@@ -23,7 +23,11 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->configure('filesystems');
+
+$app->withFacades(true, [
+    \Illuminate\Support\Facades\Storage::class => 'Storage',
+]);
 
 // $app->withEloquent();
 
@@ -94,6 +98,12 @@ $app->middleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(\Illuminate\Filesystem\FilesystemServiceProvider::class);
+
+if ($app->environment() !== 'production') {
+    $app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------

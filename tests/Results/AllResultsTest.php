@@ -9,25 +9,19 @@ class AllResultsTest extends ResultsSetup
         $this->assertEquals([], $this->results->getAllResults());
     }
 
-    public function testWhenNoReadResults()
-    {
-        $this->addResultFile();
-        $this->assertEquals([], $this->results->getAllResults());
-    }
-
-    public function testWhenReadResults()
+    public function testWhenOneResults()
     {
         $content = 'wibble';
-        $file = $this->addResultFileAsRead($content);
-        $this->assertEquals([$file->getName() => $content], $this->results->getAllResults());
+        $path = $this->addResultFile($content);
+        $this->assertEquals([basename($path) => $content], $this->results->getAllResults());
     }
 
-    public function testWhenMultipleReadResults()
+    public function testWhenMultipleResults()
     {
         $expected = [];
         foreach(['foo', 'bar', 'baz'] AS $str) {
-            $file = $this->addResultFileAsRead($str);
-            $expected[$file->getName()] = $str;
+            $path = $this->addResultFile($str);
+            $expected[basename($path)] = $str;
         }
 
         $this->assertEquals($expected, $this->results->getAllResults());

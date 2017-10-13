@@ -4,19 +4,21 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Illuminate\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface;
 
-class ResultsService extends ServerBase
+class ResultsService
 {
     /** @var Client */
     private $client;
+    /** @var LoggerInterface */
+    private $log;
 
-    const resultsSeenFile = 'app'.DIRECTORY_SEPARATOR.'results.list';
+    const resultsSentFile = 'results.sent';
+    const resultsDir = 'results';
 
-    public function __construct(LoggerInterface $log, Filesystem $file, Client $client)
+    public function __construct(LoggerInterface $log, Client $client)
     {
-        parent::__construct($log, $file);
+        $this->log = $log;
         $this->client = $client;
     }
 
@@ -27,11 +29,10 @@ class ResultsService extends ServerBase
      */
     public function getLatestResults()
     {
-        $fileList = $this->getResultsSeen();
-        // Make sure the file names are sorted (they start with Y-m-d-H-i-s)
-        sort($fileList);
+        $fileList = $this->getListOfExistingFiles();
         if (count($fileList)) {
-            return $this->file->get(array_pop($fileList));
+            // Files start with date, so last file is freshest
+            return \Storage::disk('ac_server')->get(array_pop($fileList));
         } else {
             return false;
         }
@@ -45,9 +46,9 @@ class ResultsService extends ServerBase
     public function getAllResults()
     {
         $files = [];
-        foreach($this->getResultsSeen() AS $file) {
-            if (is_file($file)) {
-                $files[basename($file)] = $this->file->get($file);
+        foreach($this->getListOfExistingFiles() AS $file) {
+            if (\Storage::disk('ac_server')->exists($file)) {
+                $files[basename($file)] = \Storage::disk('ac_server')->get($file);
             }
         }
         return $files;
@@ -58,17 +59,26 @@ class ResultsService extends ServerBase
      */
     public function checkForResults()
     {
-        $fileList = $this->file->files(env('AC_SERVER_RESULTS_PATH'));
-
-        if (count($fileList)) {
-            foreach($fileList AS $file) {
-                if (!in_array($file, $this->getResultsSeen())) {
-                    // send to ACSR server
-                    $this->sendResults($file);
-                    $this->addResultsSeen($file);
-                }
+        $resultsSent = $this->getListOfResultsSent();
+        foreach($this->getListOfExistingFiles() AS $file) {
+            if (!in_array($file, $resultsSent)) {
+                // send to ACSR server
+                $this->sendResults($file);
+                $this->setResultsSent($file);
             }
         }
+    }
+
+    /**
+     * Get a (sorted) list of all results files
+     *
+     * @return array
+     */
+    protected function getListOfExistingFiles()
+    {
+        $files = \Storage::disk('ac_server')->files(self::resultsDir);
+        sort($files);
+        return $files;
     }
 
     /**
@@ -82,7 +92,7 @@ class ResultsService extends ServerBase
             // We could use client->post but it's harder to test...
             $this->client->request('POST', env('MASTER_SERVER_URL'), [
                 RequestOptions::JSON => [
-                    'results' => $this->file->get($file),
+                    'results' => \Storage::disk('ac_server')->get($file),
                 ],
             ]);
 
@@ -93,15 +103,15 @@ class ResultsService extends ServerBase
     }
 
     /**
-     * Get a list of the results files we have already seen
+     * Get a list of the results files we have already sent
      *
      * @return string[]
      */
-    protected function getResultsSeen()
+    protected function getListOfResultsSent()
     {
-        if ($this->file->exists(storage_path(self::resultsSeenFile))) {
+        if (\Storage::disk('local')->exists(self::resultsSentFile)) {
             return array_filter(
-                explode("\n", $this->file->get(storage_path(self::resultsSeenFile)))
+                explode("\n", \Storage::disk('local')->get(self::resultsSentFile))
             );
         } else {
             return [];
@@ -109,12 +119,12 @@ class ResultsService extends ServerBase
     }
 
     /**
-     * Add a new file to the list of seen results files
+     * Add a new file to the list of sent results files
      *
      * @param $filename
      */
-    protected function addResultsSeen($filename)
+    protected function setResultsSent($filename)
     {
-        $this->file->append(storage_path(self::resultsSeenFile), $filename."\n");
+        \Storage::disk('local')->append(self::resultsSentFile, $filename);
     }
 }
