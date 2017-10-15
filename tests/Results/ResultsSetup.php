@@ -25,7 +25,7 @@ abstract class ResultsSetup extends TestCase
         );
         $this->createResultsSeenFile();
         // bump up the precision for microtime()
-        ini_set("precision", 16);
+        ini_set('precision', 16);
 
         \Storage::fake('ac_server');
         \Storage::fake('local');
@@ -44,7 +44,7 @@ abstract class ResultsSetup extends TestCase
             .\DateTime::createFromFormat('U.u', microtime(true))->format('Y-m-d-H-i-s-u');
 
         \Storage::disk('ac_server')->put($path, $content);
+
         return $path;
     }
 }
-

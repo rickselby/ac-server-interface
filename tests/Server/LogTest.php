@@ -31,9 +31,8 @@ class LogTest extends ServerSetup
 
     public function logFileProvider()
     {
-        return array_map(function($element) {
+        return array_map(function ($element) {
             return [$element];
         }, ServerService::logFiles);
     }
-
 }

@@ -19,7 +19,7 @@ class AllResultsTest extends ResultsSetup
     public function testWhenMultipleResults()
     {
         $expected = [];
-        foreach(['foo', 'bar', 'baz'] AS $str) {
+        foreach (['foo', 'bar', 'baz'] as $str) {
             $path = $this->addResultFile($str);
             $expected[basename($path)] = $str;
         }
