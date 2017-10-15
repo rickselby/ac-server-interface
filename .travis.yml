@@ -9,7 +9,14 @@ php:
 
 before_install:
   - composer self-update --stable -n
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 install: travis_retry composer install --no-suggest --prefer-dist -n -o
 
 script: vendor/bin/phpunit
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
