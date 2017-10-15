@@ -22,8 +22,8 @@ script: vendor/bin/phpunit --coverage-clover ./clover.xml
 
 after_success:
 # Code Climate
-  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT; fi
 # Coveralls
-  - travis_retry vendor/bin/coveralls -v
+  - travis_retry vendor/bin/coveralls -x ./clover.xml -v
 # codecov.io
   - bash <(curl -s https://codecov.io/bash)
