@@ -55,6 +55,7 @@ class CheckForResultsTest extends ResultsSetup
     {
         $path = $this->addResultFile($content);
         \Storage::disk('local')->append(ResultsService::resultsSentFile, $path);
+
         return $path;
     }
 
@@ -67,5 +68,4 @@ class CheckForResultsTest extends ResultsSetup
     {
         putenv('MASTER_SERVER_URL');
     }
-
 }

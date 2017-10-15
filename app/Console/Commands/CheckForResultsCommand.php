@@ -28,5 +28,4 @@ class CheckForResultsCommand extends Command
     {
         $serverService->checkForResults();
     }
-
 }

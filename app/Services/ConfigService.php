@@ -19,7 +19,7 @@ class ConfigService
     }
 
     /**
-     * Update the entry list
+     * Update the entry list.
      *
      * @param string $contents
      *
@@ -31,7 +31,7 @@ class ConfigService
     }
 
     /**
-     * Update the server config
+     * Update the server config.
      *
      * @param $contents
      *
@@ -43,12 +43,12 @@ class ConfigService
     }
 
     /**
-     * Update a config file
+     * Update a config file.
      *
-     * @param string $destination       Path to server file to update
-     * @param string $contents          New contents of file
-     * @param string $currentContents   Previous contents of file
-     * @param string $localPath         Path to store a local copy
+     * @param string $destination     Path to server file to update
+     * @param string $contents        New contents of file
+     * @param string $currentContents Previous contents of file
+     * @param string $localPath       Path to store a local copy
      *
      * @return bool
      */
@@ -72,12 +72,13 @@ class ConfigService
         } else {
             // Log the action
             $this->log->info('Config: '.$destination.' not updated; identical to existing file');
+
             return false;
         }
     }
 
     /**
-     * Get the current entry list contents
+     * Get the current entry list contents.
      *
      * @return string
      */
@@ -87,7 +88,7 @@ class ConfigService
     }
 
     /**
-     * Get the current config file contents
+     * Get the current config file contents.
      *
      * @return string
      */
@@ -97,7 +98,7 @@ class ConfigService
     }
 
     /**
-     * Check if a config file exists before trying to read it
+     * Check if a config file exists before trying to read it.
      *
      * @param $name
      *
@@ -111,5 +112,4 @@ class ConfigService
             return '';
         }
     }
-
 }

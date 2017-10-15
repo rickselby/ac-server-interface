@@ -17,7 +17,7 @@ class ServerController extends BaseController
     }
 
     /**
-     * Check that the lumen API is up and running
+     * Check that the lumen API is up and running.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -27,29 +27,31 @@ class ServerController extends BaseController
     }
 
     /**
-     * Start the server
+     * Start the server.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function start()
     {
         $this->serverService->start();
+
         return response()->json(['success' => $this->serverService->isRunning()]);
     }
 
     /**
-     * Stop the server
+     * Stop the server.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function stop()
     {
         $this->serverService->stop();
+
         return response()->json(['success' => $this->serverService->isStopped()]);
     }
 
     /**
-     * Find out if the server is running
+     * Find out if the server is running.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -59,7 +61,7 @@ class ServerController extends BaseController
     }
 
     /**
-     * Get the AC server log
+     * Get the AC server log.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -69,7 +71,7 @@ class ServerController extends BaseController
     }
 
     /**
-     * Get the client system logs
+     * Get the client system logs.
      *
      * @param Filesystem $filesystem
      *
@@ -78,9 +80,10 @@ class ServerController extends BaseController
     public function systemLog(Filesystem $filesystem)
     {
         $logs = [];
-        foreach($filesystem->files(storage_path('logs')) AS $file) {
+        foreach ($filesystem->files(storage_path('logs')) as $file) {
             $logs[basename($file)] = $filesystem->get($file);
         }
+
         return response()->json($logs);
     }
 }

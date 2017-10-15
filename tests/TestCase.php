@@ -4,6 +4,7 @@
  * Override exec() for the Services namespace - we don't want to *really* try to run things
  * while testing...
  */
+
 namespace App\Services {
     function exec($command, array &$output = null, &$return_var = null)
     {
@@ -22,7 +23,7 @@ namespace RickSelby\Tests {
          */
         public function createApplication()
         {
-            return require __DIR__ . '/../bootstrap/app.php';
+            return require __DIR__.'/../bootstrap/app.php';
         }
     }
 }
