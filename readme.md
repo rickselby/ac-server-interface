@@ -1,5 +1,10 @@
 # Assetto Corsa Server Client
 
+![PHP 7.0+](https://img.shields.io/badge/php-7.0%2B-blue.svg)
+[![Build Status](https://img.shields.io/travis/rickselby/ac-server-interface.svg)](https://travis-ci.org/rickselby/ac-server-interface)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/408e8e4d-d7c1-4289-b54a-622e5373264f.svg)](https://insight.sensiolabs.com/projects/408e8e4d-d7c1-4289-b54a-622e5373264f)
+[![Code Coverage](https://img.shields.io/codecov/c/github/rickselby/ac-server-interface.svg)](https://codecov.io/gh/rickselby/ac-server-interface)
+
 This is the client app that goes with... a master app to control a number of clients. To be created.
 
 It's a web interface to control an assetto corsa server.

@@ -54,7 +54,7 @@ class CheckForResultsTest extends ResultsSetup
     protected function addResultFileAsSent($content = '')
     {
         $path = $this->addResultFile($content);
-        \Storage::disk('local')->append(ResultsService::resultsSentFile, $path);
+        \Storage::disk('local')->append(ResultsService::RESULTS_SENT_FILE, $path);
 
         return $path;
     }

@@ -12,7 +12,7 @@ class ServerService
     private $scriptService;
 
     // Possible log files, in the order we wish to check them
-    const logFiles = [
+    const LOG_FILES = [
         'acServer.log',
         'acServer.log.last',
     ];
@@ -20,8 +20,8 @@ class ServerService
     /*
      * Messages we expect from the script
      */
-    const msg_running = 'Server is Running';
-    const msg_notRunning = 'Server is Not Running';
+    const MSG_RUNNING = 'Server is Running';
+    const MSG_NOT_RUNNING = 'Server is Not Running';
 
     public function __construct(LoggerInterface $log, ScriptService $scriptService)
     {
@@ -68,7 +68,7 @@ class ServerService
      */
     public function isRunning()
     {
-        return $this->status() == self::msg_running;
+        return $this->status() == self::MSG_RUNNING;
     }
 
     /**
@@ -78,7 +78,7 @@ class ServerService
      */
     public function isStopped()
     {
-        return $this->status() == self::msg_notRunning;
+        return $this->status() == self::MSG_NOT_RUNNING;
     }
 
     /**
@@ -88,7 +88,7 @@ class ServerService
      */
     public function getLogFile()
     {
-        foreach (self::logFiles as $logFile) {
+        foreach (self::LOG_FILES as $logFile) {
             if (\Storage::disk('ac_server')->exists($logFile)) {
                 return \Storage::disk('ac_server')->get($logFile);
             }

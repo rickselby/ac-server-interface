@@ -29,8 +29,6 @@ $app->withFacades(true, [
     \Illuminate\Support\Facades\Storage::class => 'Storage',
 ]);
 
-// $app->withEloquent();
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -44,7 +42,7 @@ $app->withFacades(true, [
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
+    Laravel\Lumen\Exceptions\Handler::class
 );
 
 $app->singleton(
@@ -95,10 +93,6 @@ $app->middleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(\Illuminate\Filesystem\FilesystemServiceProvider::class);
 

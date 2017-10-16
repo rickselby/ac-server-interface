@@ -33,13 +33,13 @@ abstract class ResultsSetup extends TestCase
 
     protected function createResultsSeenFile()
     {
-        \Storage::disk('local')->put(ResultsService::resultsSentFile, '');
+        \Storage::disk('local')->put(ResultsService::RESULTS_SENT_FILE, '');
     }
 
     protected function addResultFile($content = '')
     {
         // Use DateTime to enable microseconds, so we get unique filenames
-        $path = ResultsService::resultsDir
+        $path = ResultsService::RESULTS_DIRECTORY
             .DIRECTORY_SEPARATOR
             .\DateTime::createFromFormat('U.u', microtime(true))->format('Y-m-d-H-i-s-u');
 
