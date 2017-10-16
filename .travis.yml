@@ -3,25 +3,18 @@ language: php
 sudo: false
 
 php:
+  - 5.6
   - 7.0
   - 7.1
   - 7.2
 
 before_install:
   - composer self-update --stable -n
-# Code Climate
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 
 install: travis_retry composer install --no-suggest --prefer-dist -n -o
 
 script: vendor/bin/phpunit --coverage-clover ./clover.xml
 
 after_success:
-# Code Climate
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT; fi
-# codecov.io
+# Code coverage report
   - bash <(curl -s https://codecov.io/bash)
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover clover.xml
