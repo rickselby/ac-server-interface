@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ConfigService;
 use Illuminate\Http\Request;
+use App\Services\ConfigService;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class ConfigController extends BaseController

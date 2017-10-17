@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Services\ResultsService;
 use Illuminate\Console\Command;
+use App\Services\ResultsService;
 
 class CheckForResultsCommand extends Command
 {
