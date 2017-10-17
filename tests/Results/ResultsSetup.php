@@ -2,10 +2,10 @@
 
 namespace RickSelby\Tests\Results;
 
-use App\Services\ResultsService;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use RickSelby\Tests\TestCase;
+use App\Services\ResultsService;
 
 abstract class ResultsSetup extends TestCase
 {

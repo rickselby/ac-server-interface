@@ -2,10 +2,10 @@
 
 namespace RickSelby\Tests\Config;
 
-use App\Services\ConfigService;
-use Illuminate\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface;
 use RickSelby\Tests\TestCase;
+use App\Services\ConfigService;
+use Illuminate\Filesystem\Filesystem;
 
 class ConfigTest extends TestCase
 {

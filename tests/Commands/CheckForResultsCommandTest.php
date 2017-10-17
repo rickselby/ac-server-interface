@@ -2,8 +2,8 @@
 
 namespace RickSelby\Tests\Config;
 
-use App\Services\ResultsService;
 use RickSelby\Tests\TestCase;
+use App\Services\ResultsService;
 
 class CheckForResultsCommandTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace RickSelby\Tests\Script;
 
-use App\Services\ScriptService;
 use RickSelby\Tests\TestCase;
+use App\Services\ScriptService;
 
 class ScriptTest extends TestCase
 {
