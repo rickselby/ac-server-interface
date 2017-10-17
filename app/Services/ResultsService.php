@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
+use GuzzleHttp\RequestOptions;
 
 class ResultsService
 {
@@ -62,7 +62,7 @@ class ResultsService
     {
         $resultsSent = $this->getListOfResultsSent();
         foreach ($this->getListOfExistingFiles() as $file) {
-            if (!in_array($file, $resultsSent)) {
+            if (! in_array($file, $resultsSent)) {
                 // send to ACSR server
                 $this->sendResults($file);
                 $this->setResultsSent($file);

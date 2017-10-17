@@ -2,9 +2,9 @@
 
 namespace RickSelby\Tests\Api;
 
-use App\Services\ResultsService;
-use App\Services\ServerService;
 use RickSelby\Tests\TestCase;
+use App\Services\ServerService;
+use App\Services\ResultsService;
 
 class ApiTest extends TestCase
 {

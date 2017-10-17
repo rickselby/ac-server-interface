@@ -2,10 +2,10 @@
 
 namespace RickSelby\Tests\Server;
 
-use App\Services\ScriptService;
-use App\Services\ServerService;
 use Psr\Log\LoggerInterface;
 use RickSelby\Tests\TestCase;
+use App\Services\ScriptService;
+use App\Services\ServerService;
 
 abstract class ServerSetup extends TestCase
 {
